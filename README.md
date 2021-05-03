@@ -81,12 +81,13 @@ func TestGetMethod(t *testing.T) {
 	supertest.Get("/")
 	supertest.Set("Content-Type", "application/json")
 	supertest.End(func(rr *httptest.ResponseRecorder) {
+	
 		response := util.Parse(rr.Body.Bytes())
 		logrus.Info(response.Data)
 
 		assert.Equal(t, rr.Code, response.StatusCode)
-    assert.Equal(t, http.MethodGet, response.Method)
-    assert.Equal(t, "fetch request using get method", response.Message)
+		assert.Equal(t, http.MethodGet, response.Method)
+		assert.Equal(t, "fetch request using get method", response.Message)
 	})
 }
 
@@ -103,12 +104,13 @@ func TestPostMethod(t *testing.T) {
 	request.Set("Content-Type", "application/json")
 
 	request.End(func(rr *httptest.ResponseRecorder) {
+	
 		response := util.Parse(rr.Body.Bytes())
 		logrus.Info(response.Data)
 
 		assert.Equal(t, rr.Code, http.StatusOK)
-    assert.Equal(t, http.MethodPost, response.Method)
-    assert.Equal(t, "fetch request using post method", response.Message)
+    		assert.Equal(t, http.MethodPost, response.Method)
+    		assert.Equal(t, "fetch request using post method", response.Message)
 	})
 }
 ```
