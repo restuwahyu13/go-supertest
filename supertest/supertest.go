@@ -2,7 +2,6 @@ package super
 
 import (
 	"bytes"
-	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -12,27 +11,54 @@ import (
 )
 
 type SuperTest interface {
-	GET(url string) (*httptest.ResponseRecorder, *http.Request, error)
-	POST(url string) (*httptest.ResponseRecorder, *http.Request, error)
-	PUT(url string) (*httptest.ResponseRecorder, *http.Request, error)
-	DELETE(url string) (*httptest.ResponseRecorder, *http.Request, error)
+	Get(url string) (*httptest.ResponseRecorder, *http.Request, error)
+	Post(url string) (*httptest.ResponseRecorder, *http.Request, error)
+	Put(url string) (*httptest.ResponseRecorder, *http.Request, error)
+	Delete(url string) (*httptest.ResponseRecorder, *http.Request, error)
+}
+
+type payload struct {
+	path string
+	method string
+}
+
+type response struct {
+	httpResponse *httptest.ResponseRecorder
+}
+
+type request struct {
+	httpRequest *http.Request
+}
+
+type core interface {
 	Send(payload interface{})
-	Set(key, value string)
 	End(handle func(rr *httptest.ResponseRecorder))
+	Set(key, value string)
 	Auth(key, value string)
-	Field(key , value string)
+}
+
+type supertest struct {
+	router *gin.Engine
+	test *testing.T
+	payload
+	response
+	request
+	core
 }
 
 func NewSuperTest(router *gin.Engine, test *testing.T) *supertest {
 	return &supertest{router: router, test: test}
 }
 
-func(ctx *supertest) GET(url string) (*httptest.ResponseRecorder)  {
+/**
+* @description -> http client for get request
+*/
+
+func(ctx *supertest) Get(url string) (*httptest.ResponseRecorder)  {
 
 	time.Sleep(time.Second * 1)
 
 	req, err := http.NewRequest(http.MethodGet, url, bytes.NewBuffer([]byte(nil)))
-	ctx.request.Request = req
 
 	if err != nil {
 		ctx.test.Error(err.Error())
@@ -40,26 +66,33 @@ func(ctx *supertest) GET(url string) (*httptest.ResponseRecorder)  {
 	}
 
 	rr := httptest.NewRecorder()
-	ctx.response.Response = rr
-
 	ctx.router.ServeHTTP(rr, req)
+
+	ctx.request.httpRequest = req
+	ctx.response.httpResponse = rr
 
 	return rr
 }
 
-func(ctx *supertest) POST(url string) (*httptest.ResponseRecorder) {
+/**
+* @description -> http client for post request
+*/
+
+func(ctx *supertest) Post(url string) core {
+	ctx.payload.path = url
+	ctx.payload.method = http.MethodPost
+	return ctx
+}
+
+/**
+* @description -> http client for delete request
+*/
+
+func(ctx *supertest) Delete(url string) (*httptest.ResponseRecorder)  {
 
 	time.Sleep(time.Second * 1)
 
-	response, err := json.Marshal(ctx.body.Data)
-
-	if err != nil  {
-		ctx.test.Error(err.Error())
-		return nil
-	}
-
-	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(response))
-	ctx.request.Request = req
+	req, err := http.NewRequest(http.MethodGet, url, bytes.NewBuffer([]byte(nil)))
 
 	if err != nil {
 		ctx.test.Error(err.Error())
@@ -67,56 +100,20 @@ func(ctx *supertest) POST(url string) (*httptest.ResponseRecorder) {
 	}
 
 	rr := httptest.NewRecorder()
-	ctx.response.Response = rr
-
 	ctx.router.ServeHTTP(rr, req)
+
+	ctx.request.httpRequest = req
+	ctx.response.httpResponse = rr
 
 	return rr
 }
 
-func(ctx *supertest) DELETE(url string) (*httptest.ResponseRecorder)  {
+/**
+* @description -> http client for put request
+*/
 
-	time.Sleep(time.Second * 1)
-
-	req, err := http.NewRequest(http.MethodDelete, url, bytes.NewBuffer([]byte(nil)))
-	ctx.request.Request = req
-
-	if err != nil {
-		ctx.test.Error(err.Error())
-		return nil
-	}
-
-	rr := httptest.NewRecorder()
-	ctx.response.Response = rr
-
-	ctx.router.ServeHTTP(rr, req)
-
-	return rr
-}
-
-func(ctx *supertest) PUT(url string) (*httptest.ResponseRecorder) {
-
-	time.Sleep(time.Second * 1)
-
-	response, err := json.Marshal(ctx.body.Data)
-
-	if err != nil  {
-		ctx.test.Error(err.Error())
-		return nil
-	}
-
-	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(response))
-	ctx.request.Request = req
-
-	if err != nil {
-		ctx.test.Error(err.Error())
-		return nil
-	}
-
-	rr := httptest.NewRecorder()
-	ctx.response.Response = rr
-
-	ctx.router.ServeHTTP(rr, req)
-
-	return rr
+func(ctx *supertest) Put(url string) core {
+	ctx.payload.path = url
+	ctx.payload.method = http.MethodPost
+	return ctx
 }

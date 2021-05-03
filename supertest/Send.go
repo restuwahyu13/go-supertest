@@ -1,22 +1,32 @@
 package super
 
 import (
+	"bytes"
 	"encoding/json"
-
-	"github.com/sirupsen/logrus"
+	"net/http"
+	"net/http/httptest"
+	"time"
 )
 
-func(ctx *supertest) Send(payload interface{})  {
+func(ctx *supertest) Send(payload interface{}) {
 
-	var data interface{}
+		time.Sleep(time.Second * 1)
 
-	encoded, _ := json.Marshal(payload)
-	err := json.Unmarshal(encoded, &data)
+		response, err := json.Marshal(payload)
 
-	if err != nil {
-		logrus.Error(err.Error())
-		return
-	}
+		if err != nil  {
+			ctx.test.Error(err.Error())
+		}
 
-	ctx.body.Data = data
+		req, err := http.NewRequest(ctx.payload.method, ctx.payload.path, bytes.NewBuffer(response))
+		ctx.request.httpRequest = req
+
+		if err != nil {
+			ctx.test.Error(err.Error())
+		}
+
+		rr := httptest.NewRecorder()
+		ctx.response.httpResponse = rr
+
+		ctx.router.ServeHTTP(rr, req)
 }

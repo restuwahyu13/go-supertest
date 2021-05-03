@@ -62,6 +62,7 @@ func SetupRouter() *gin.Engine {
 package main
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"testing"
 
@@ -69,24 +70,19 @@ import (
 	"github.com/go-playground/assert/v2"
 	super "github.com/restuwahyu13/go-supertest/supertest"
 	util "github.com/restuwahyu13/go-supertest/utils"
+	"github.com/sirupsen/logrus"
 )
 
 var router = SetupRouter()
 
 func TestGetMethod(t *testing.T) {
-	supertest := super.NewSuperTest(router)
+	supertest := super.NewSuperTest(router, t)
 
-	_, err := supertest.GET("/")
+	supertest.Get("/")
 	supertest.Set("Content-Type", "application/json")
-
-	if err != nil {
-		t.Error(err)
-	}
-
 	supertest.End(func(rr *httptest.ResponseRecorder) {
-
-    response := util.Parse(rr.Body.Bytes())
-		t.Log(response)
+		response := util.Parse(rr.Body.Bytes())
+		logrus.Info(response.Data)
 
 		assert.Equal(t, rr.Code, response.StatusCode)
     assert.Equal(t, http.MethodGet, response.Method)
@@ -95,27 +91,22 @@ func TestGetMethod(t *testing.T) {
 }
 
 func TestPostMethod(t *testing.T) {
-	supertest := super.NewSuperTest(router)
+	supertest := super.NewSuperTest(router, t)
 
 	payload := gin.H{
 		"email" : "restuwahyu13@gmail.com",
 		"password" : "bukopin12",
 	}
 
-	_, err := supertest.POST("/")
-	supertest.Set("Content-Type", "application/json")
-  supertest.Send(payload)
+	request := supertest.Post("/")
+	request.Send(payload)
+	request.Set("Content-Type", "application/json")
 
-	if err != nil {
-		t.Error(err)
-	}
+	request.End(func(rr *httptest.ResponseRecorder) {
+		response := util.Parse(rr.Body.Bytes())
+		logrus.Info(response.Data)
 
-	supertest.End(func(rr *httptest.ResponseRecorder) {
-
-    response := util.Parse(rr.Body.Bytes())
-		t.Log(response)
-
-		assert.Equal(t, rr.Code, response.StatusCode)
+		assert.Equal(t, rr.Code, http.StatusOK)
     assert.Equal(t, http.MethodPost, response.Method)
     assert.Equal(t, "fetch request using post method", response.Message)
 	})
