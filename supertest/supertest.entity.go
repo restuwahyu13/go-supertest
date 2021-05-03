@@ -3,6 +3,7 @@ package super
 import (
 	"net/http"
 	"net/http/httptest"
+	"testing"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,6 +23,7 @@ type request struct {
 
 type supertest struct {
 	router *gin.Engine
+	test *testing.T
 	body
 	response
 	request

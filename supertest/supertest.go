@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"testing"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
 type SuperTest interface {
@@ -23,78 +23,100 @@ type SuperTest interface {
 	Field(key , value string)
 }
 
-func NewSuperTest(router *gin.Engine) *supertest {
-	return &supertest{router: router}
+func NewSuperTest(router *gin.Engine, test *testing.T) *supertest {
+	return &supertest{router: router, test: test}
 }
 
-func(ctx *supertest) GET(url string) (*httptest.ResponseRecorder, error)  {
+func(ctx *supertest) GET(url string) (*httptest.ResponseRecorder)  {
 
 	time.Sleep(time.Second * 1)
 
 	req, err := http.NewRequest(http.MethodGet, url, bytes.NewBuffer([]byte(nil)))
 	ctx.request.Request = req
 
+	if err != nil {
+		ctx.test.Error(err.Error())
+		return nil
+	}
+
 	rr := httptest.NewRecorder()
 	ctx.response.Response = rr
 
 	ctx.router.ServeHTTP(rr, req)
 
-	return rr,  err
+	return rr
 }
 
-func(ctx *supertest) POST(url string) (*httptest.ResponseRecorder, error) {
+func(ctx *supertest) POST(url string) (*httptest.ResponseRecorder) {
 
 	time.Sleep(time.Second * 1)
 
 	response, err := json.Marshal(ctx.body.Data)
 
 	if err != nil  {
-		logrus.Error(err.Error())
+		ctx.test.Error(err.Error())
+		return nil
 	}
 
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(response))
 	ctx.request.Request = req
+
+	if err != nil {
+		ctx.test.Error(err.Error())
+		return nil
+	}
 
 	rr := httptest.NewRecorder()
 	ctx.response.Response = rr
 
 	ctx.router.ServeHTTP(rr, req)
 
-	return rr,  err
+	return rr
 }
 
-func(ctx *supertest) DELETE(url string) (*httptest.ResponseRecorder, error)  {
+func(ctx *supertest) DELETE(url string) (*httptest.ResponseRecorder)  {
 
 	time.Sleep(time.Second * 1)
 
 	req, err := http.NewRequest(http.MethodDelete, url, bytes.NewBuffer([]byte(nil)))
 	ctx.request.Request = req
 
+	if err != nil {
+		ctx.test.Error(err.Error())
+		return nil
+	}
+
 	rr := httptest.NewRecorder()
 	ctx.response.Response = rr
 
 	ctx.router.ServeHTTP(rr, req)
 
-	return rr,  err
+	return rr
 }
 
-func(ctx *supertest) PUT(url string) (*httptest.ResponseRecorder, error) {
+func(ctx *supertest) PUT(url string) (*httptest.ResponseRecorder) {
 
 	time.Sleep(time.Second * 1)
 
 	response, err := json.Marshal(ctx.body.Data)
 
 	if err != nil  {
-		logrus.Error(err.Error())
+		ctx.test.Error(err.Error())
+		return nil
 	}
 
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(response))
 	ctx.request.Request = req
+
+	if err != nil {
+		ctx.test.Error(err.Error())
+		return nil
+	}
 
 	rr := httptest.NewRecorder()
 	ctx.response.Response = rr
 
 	ctx.router.ServeHTTP(rr, req)
 
-	return rr,  err
+	return rr
 }
