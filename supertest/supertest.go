@@ -62,3 +62,39 @@ func(ctx *supertest) POST(url string) (*httptest.ResponseRecorder, error) {
 
 	return rr,  err
 }
+
+func(ctx *supertest) DELETE(url string) (*httptest.ResponseRecorder, error)  {
+
+	time.Sleep(time.Second * 1)
+
+	req, err := http.NewRequest(http.MethodDelete, url, bytes.NewBuffer([]byte(nil)))
+	ctx.request.Request = req
+
+	rr := httptest.NewRecorder()
+	ctx.response.Response = rr
+
+	ctx.router.ServeHTTP(rr, req)
+
+	return rr,  err
+}
+
+func(ctx *supertest) PUT(url string) (*httptest.ResponseRecorder, error) {
+
+	time.Sleep(time.Second * 1)
+
+	response, err := json.Marshal(ctx.body.Data)
+
+	if err != nil  {
+		logrus.Error(err.Error())
+	}
+
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(response))
+	ctx.request.Request = req
+
+	rr := httptest.NewRecorder()
+	ctx.response.Response = rr
+
+	ctx.router.ServeHTTP(rr, req)
+
+	return rr,  err
+}
