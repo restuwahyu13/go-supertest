@@ -59,6 +59,7 @@ func(ctx *supertest) Get(url string) (*httptest.ResponseRecorder)  {
 	time.Sleep(time.Second * 1)
 
 	req, err := http.NewRequest(http.MethodGet, url, bytes.NewBuffer([]byte(nil)))
+	ctx.request.httpRequest = req
 
 	if err != nil {
 		ctx.test.Error(err.Error())
@@ -66,10 +67,9 @@ func(ctx *supertest) Get(url string) (*httptest.ResponseRecorder)  {
 	}
 
 	rr := httptest.NewRecorder()
-	ctx.router.ServeHTTP(rr, req)
-
-	ctx.request.httpRequest = req
 	ctx.response.httpResponse = rr
+
+	ctx.router.ServeHTTP(rr, req)
 
 	return rr
 }
@@ -93,6 +93,7 @@ func(ctx *supertest) Delete(url string) (*httptest.ResponseRecorder)  {
 	time.Sleep(time.Second * 1)
 
 	req, err := http.NewRequest(http.MethodGet, url, bytes.NewBuffer([]byte(nil)))
+	ctx.request.httpRequest = req
 
 	if err != nil {
 		ctx.test.Error(err.Error())
@@ -100,10 +101,9 @@ func(ctx *supertest) Delete(url string) (*httptest.ResponseRecorder)  {
 	}
 
 	rr := httptest.NewRecorder()
-	ctx.router.ServeHTTP(rr, req)
-
-	ctx.request.httpRequest = req
 	ctx.response.httpResponse = rr
+
+	ctx.router.ServeHTTP(rr, req)
 
 	return rr
 }
@@ -114,6 +114,6 @@ func(ctx *supertest) Delete(url string) (*httptest.ResponseRecorder)  {
 
 func(ctx *supertest) Put(url string) core {
 	ctx.payload.path = url
-	ctx.payload.method = http.MethodPost
+	ctx.payload.method = http.MethodPut
 	return ctx
 }
