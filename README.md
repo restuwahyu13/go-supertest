@@ -10,7 +10,7 @@
 Go Supertest is minimalize HTTP Client Testing only for Gin Framework, inspired by
 [Supertest](https://www.npmjs.com/package/supertest) package library HTTP Client Testing for Express.js Framework.
 
-- [GPC API Documentation](#Agtran-API-Documentation-(Next-Version))
+- [API Documentation](#go-supertest)
   * [Installation](#installation)
   * [API Reference](#api-reference)
     + [NewSuperTest](#newsupertest)
