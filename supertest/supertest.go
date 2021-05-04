@@ -16,8 +16,9 @@ import (
 type SuperTest interface {
 	Get(url string)
 	Post(url string)
-	Put(url string)
 	Delete(url string)
+	Put(url string)
+	Patch(url string)
 	Head(url string)
 	Options(url string)
 	Send(payload interface{})
@@ -90,6 +91,15 @@ func (ctx *supertest) Delete(url string) {
 func (ctx *supertest) Put(url string) {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodPut
+}
+
+/**
+* @description -> http client for patch request
+ */
+
+func (ctx *supertest) Patch(url string) {
+	ctx.payload.path = url
+	ctx.payload.method = http.MethodPatch
 }
 
 /**
