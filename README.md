@@ -4,7 +4,7 @@
 
 Go Supertest is minimalize HTTP Client Test only for Gin Framework, inspired by [Supertest]() package library HTTP Client Test for Express.js Framework.
 
-- [GPC API Documentation](#go-supertest)
+- [API Documentation](#go-supertest)
   * [Installation](#installation)
   * [API Reference](#api-reference)
     + [NewSuperTest](#newsupertest)
@@ -312,5 +312,5 @@ Want to make **Midtrans Node** more perfect ? Let's contribute and follow the [c
 - [MIT License](https://github.com/restuwahyu13/go-playground-converter/blob/main/LICENSE.md)
 
 <p align="right" style="padding: 5px; border-radius: 100%; background-color: red; font-size: 2rem;">
-  <b><a href="#midtrans-node">BACK TO TOP</a></b>
+  <b><a href="#go-supertest">BACK TO TOP</a></b>
 </p>
