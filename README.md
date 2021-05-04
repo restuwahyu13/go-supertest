@@ -4,21 +4,22 @@
 
 Go Supertest is minimalize HTTP Client Test only for Gin Framework, inspired by [Supertest]() package library HTTP Client Test for Express.js Framework.
 
-- [GPC API Documentation](#Agtran-API-Documentation-(Next-Version))
+- [GPC API Documentation](#go-supertest)
   * [Installation](#installation)
   * [API Reference](#api-reference)
     + [NewSuperTest](#newsupertest)
-    + [Get](#get)
-    + [Post](#post)
-    + [Delete](#delete)
-    + [Put](#put)
-    + [Patch](#patch)
-    + [Head](#head)
-    + [Options](#options)
-    + [Send](#BindValidator)
-    + [Set](#BindValidator)
-    + [Auth](#BindValidator)
-    + [Timeout](#BindValidator)
+    + [Get](#get-url-string-)
+    + [Post](#post-url-string-)
+    + [Delete](#delete-url-string-)
+    + [Put](#put-url-string-)
+    + [Patch](#patch-url-string-)
+    + [Head](#head-url-string-)
+    + [Options](#options-url-string-)
+    + [Send](#send-payload-interface-)
+    + [End](#end-handle-funcrr-httptestresponserecorder-)
+    + [Set](#set-key-value-string-)
+    + [Auth](#auth-key-value-string-)
+    + [Timeout](#timeout-timetype-string-value-timeduration-)
   * [Example Usage](#example-usage)
     + [Main Setup](#main-setup)
     + [Test Setup](#test-setup)
@@ -35,7 +36,7 @@ $ go get -u https://github.com/restuwahyu13/go-supertest
 
 ### API Reference
 
-**Important** if you use http request using `Get` or `Delete` you must be use Send with nil value and `Send` must be added before `Set`, please check example usage about this package is working.
+**Important** if you use http request using `Get` or `Delete` you must be use `Send` with nil value and `Send` must be added before `Set`, please check example usage about this package is working.
 
 
   - #### Get( url string )
@@ -187,6 +188,8 @@ $ go get -u https://github.com/restuwahyu13/go-supertest
 - #### Test Setup
 
   ```go
+  package main
+
   var router = SetupRouter()
 
   func TestGetMethod(t *testing.T) {
@@ -287,9 +290,9 @@ $ go get -u https://github.com/restuwahyu13/go-supertest
 | Patch   | *yes* | for handling request http client using Patch method                              |
 | Head    | *yes* | for handling request http client using Head method                               |
 | Options | *yes* | for handling request http client using Options method                            |
-| Set     | *yes* | set your headers before sending http request into client                         |
 | Send    | *yes* | send request data needed by client                                               |
 | End     | *yes* | receive responses from http requests                                             |
+| Set     | *yes* | set your headers before sending http request into client                         |
 | Auth    | *yes* | pass the username or password if you are using HTTP Basic authentication         |
 | Timeout | *yes* | set delay before sending request into client                                     |
 | Expect  | *yes* | expect the given data to match                                                   |
