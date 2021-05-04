@@ -59,13 +59,28 @@ func SetupRouter() *gin.Engine {
 ### Example Usage Test
 
 ```go
-func TestGetMethod(t *testing.T) {
-	supertest := super.NewSuperTest(router, t)
+package main
 
-	supertest.Get("/")
-	supertest.Timeout("second", 1)
-	supertest.Set("Content-Type", "application/json")
-	supertest.End(func(rr *httptest.ResponseRecorder) {
+import (
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	"github.com/gin-gonic/gin"
+	"github.com/go-playground/assert/v2"
+	"github.com/restuwahyu13/go-supertest/supertest"
+	util "github.com/restuwahyu13/go-supertest/utils"
+	"github.com/sirupsen/logrus"
+)
+
+var router = SetupRouter()
+
+func TestGetMethod(t *testing.T) {
+	test := supertest.NewSuperTest(router, t)
+
+	test.Get("/")
+	test.Set("Content-Type", "application/json")
+	test.End(func(rr *httptest.ResponseRecorder) {
 
 		response := util.Parse(rr.Body.Bytes())
 		logrus.Info(response.Data)
@@ -77,18 +92,17 @@ func TestGetMethod(t *testing.T) {
 }
 
 func TestPostMethod(t *testing.T) {
-	supertest := super.NewSuperTest(router, t)
+	test := supertest.NewSuperTest(router, t)
 
 	payload := gin.H{
 		"email" : "restuwahyu13@gmail.com",
 		"password" : "bukopin12",
 	}
 
-	supertest.Post("/")
-	supertest.Timeout("second", 1)
-	supertest.Send(payload)
-	supertest.Set("Content-Type", "application/json")
-	supertest.End(func(rr *httptest.ResponseRecorder) {
+	test.Post("/")
+	test.Send(payload)
+	test.Set("Content-Type", "application/json")
+	test.End(func(rr *httptest.ResponseRecorder) {
 
 		response := util.Parse(rr.Body.Bytes())
 		logrus.Info(response.Data)

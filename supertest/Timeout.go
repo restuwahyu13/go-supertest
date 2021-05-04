@@ -1,4 +1,4 @@
-package super
+package supertest
 
 import "time"
 
