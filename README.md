@@ -10,26 +10,12 @@
 Go Supertest is minimalize HTTP Client Testing only for Gin Framework, inspired by
 [Supertest](https://www.npmjs.com/package/supertest) package library HTTP Client Testing for Express.js Framework.
 
-- [API Documentation](#go-supertest)
-  - [Installation](#installation)
+- [Go SuperTest](#go-supertest)
+- [Installation](#installation)
   - [API Reference](#api-reference)
-    - [NewSuperTest](#newsupertest)
-    - [Get](#get-url-string-)
-    - [Post](#post-url-string-)
-    - [Delete](#delete-url-string-)
-    - [Put](#put-url-string-)
-    - [Patch](#patch-url-string-)
-    - [Head](#head-url-string-)
-    - [Options](#options-url-string-)
-    - [Send](#send-payload-interface-)
-    - [End](#end-handle-funcrr-httptestresponserecorder-)
-    - [Set](#set-key-value-string-)
-    - [Auth](#auth-key-value-string-)
-    - [Timeout](#timeout-timetype-string-value-timeduration-)
   - [Example Usage](#example-usage)
-    - [Main Setup](#main-setup)
-    - [Test Setup](#test-setup)
   - [API Status Reference](#api-status-reference)
+  - [Testing](#testing)
   - [Bugs](#bugs)
   - [Contributing](#contributing)
   - [License](#license)
@@ -308,6 +294,12 @@ added before `Set`, please check example usage about this package is working.
 | Expect  | _yes_ | expect the given data to match                                                   |
 | Attach  | _no_  | handle requests from files or image uploads if you are using multipart/form-data |
 | Field   | _no_  | handle data submitted from form/field if you are using multipart/form-data       |
+
+### Testing
+
+```sh
+$ go test ./supertest/... || make gotest
+```
 
 ### Bugs
 

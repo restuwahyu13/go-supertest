@@ -1,22 +1,22 @@
-language: go
-go:
-  - '1.16'
 addons:
   apt:
     packages:
       - make
 before_install:
-  - echo -e "machine github.com\n  login $GITHUB_TOKEN" > ~/.netrc
-  - git lfs pull
-  - make goinstall
+  - "echo -e \"machine github.com\\n  login $GITHUB_TOKEN\" > ~/.netrc"
+  - 'git lfs pull'
+  - 'make goinstall'
 branches:
   only:
     - main
+dist: xenial
 git:
   lfs_skip_smudge: true
-script: make gotest
-dist: xenial
-os:
-  - linux
+go:
+  - '1.16'
 jobs:
   fast_finish: true
+language: go
+os:
+  - linux
+script: 'make gotest'
