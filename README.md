@@ -31,7 +31,7 @@ Go Supertest is minimalize HTTP Client Testing only for Gin Framework, inspired 
 ## Installation
 
 ```sh
-$ go get -u https://github.com/restuwahyu13/go-supertest
+$ go get -u github.com/restuwahyu13/go-supertest
 ```
 
 ### API Reference
