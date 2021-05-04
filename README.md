@@ -38,6 +38,11 @@ $ go get -u https://github.com/restuwahyu13/go-supertest
 
 **Important** if you use http request using `Get` or `Delete` you must be use `Send` with nil value and `Send` must be added before `Set`, please check example usage about this package is working.
 
+  - #### NewSuperTest( router *gin.Engine, test *testing.T )
+  
+    | Method       | Description                             |
+    | ------------ | --------------------------------------- |
+    | NewSuperTest | instance method for create unit testing | 
 
   - #### Get( url string )
   
@@ -46,16 +51,16 @@ $ go get -u https://github.com/restuwahyu13/go-supertest
     | Get    | for handling request http client using GET method | 
 
   - #### Post( url string )
-  
-    | Method | Description                                       |
-    | ------ | ------------------------------------------------- |
-    | Post   | or handling request http client using POST method | 
+    
+    | Method | Description                                        | 
+    | ------ | -------------------------------------------------- |
+    | Post   | for handling request http client using POST method |
 
   - #### Delete( url string )
   
-    | Method | Description                                         |
-    | ------ | --------------------------------------------------- |
-    | Delete | or handling request http client using Delete method | 
+    | Method | Description                                          | 
+    | ------ | ---------------------------------------------------- |
+    | Delete | for handling request http client using Delete method |
 
   - #### Put( url string )
   
