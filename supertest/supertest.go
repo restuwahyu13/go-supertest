@@ -9,6 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/**
+* @description -> core funcionality
+ */
+
 type SuperTest interface {
 	Get(url string)
 	Post(url string)
@@ -43,6 +47,10 @@ type supertest struct {
 	response
 	request
 }
+
+/**
+* @description -> parent core funcionality
+ */
 
 func NewSuperTest(router *gin.Engine, test *testing.T) *supertest {
 	return &supertest{router: router, test: test}
