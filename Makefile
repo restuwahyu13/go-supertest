@@ -1,3 +1,6 @@
+goinstall:
+	@go mod download
+
 gotest:
 	@richgo test -v ./supertest/...
 
