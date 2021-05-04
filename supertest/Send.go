@@ -15,6 +15,7 @@ func(ctx *supertest) Send(payload interface{}) {
 				req, err :=  http.NewRequest(ctx.payload.method, ctx.payload.path, bytes.NewBuffer([]byte(nil)))
 				req.Header.Add("Access-Control-Allow-Origin", "*")
 				req.Header.Add("Access-Control-Allow-Headers", "*")
+				req.Header.Add("Access-Control-Expose-Headers", "*")
 				req.Header.Add("User-Agent", "go-supertest/0.0.1")
 
 				request <- req
@@ -35,6 +36,7 @@ func(ctx *supertest) Send(payload interface{}) {
 				req, err := http.NewRequest(ctx.payload.method, ctx.payload.path, bytes.NewBuffer(response))
 				req.Header.Add("Access-Control-Allow-Origin", "*")
 				req.Header.Add("Access-Control-Allow-Headers", "*")
+				req.Header.Add("Access-Control-Expose-Headers", "*")
 				req.Header.Add("User-Agent", "go-supertest/0.0.1")
 
 				request <- req
