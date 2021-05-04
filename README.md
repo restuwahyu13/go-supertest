@@ -198,7 +198,7 @@ $ go get -u github.com/restuwahyu13/go-supertest
   var router = SetupRouter()
 
   func TestGetMethod(t *testing.T) {
-    test := NewSuperTest(router, t)
+    test := supertest.NewSuperTest(router, t)
 
     test.Get("/")
     test.Send(nil)
@@ -214,7 +214,7 @@ $ go get -u github.com/restuwahyu13/go-supertest
   }
 
   func TestPostMethod(t *testing.T) {
-    test := NewSuperTest(router, t)
+    test := supertest.NewSuperTest(router, t)
 
     payload := gin.H{
       "name": "restu wahyu saputra",
@@ -234,7 +234,7 @@ $ go get -u github.com/restuwahyu13/go-supertest
   }
 
   func TestDeleteMethod(t *testing.T) {
-    test := NewSuperTest(router, t)
+    test := supertest.NewSuperTest(router, t)
 
     test.Delete("/" + fmt.Sprintf("%v", 5))
     test.Send(nil)
@@ -257,7 +257,7 @@ $ go get -u github.com/restuwahyu13/go-supertest
   }
 
   func TestPutMethod(t *testing.T) {
-    test := NewSuperTest(router, t)
+    test := supertest.NewSuperTest(router, t)
 
     payload := gin.H{
       "name": "restu wahyu saputra",
