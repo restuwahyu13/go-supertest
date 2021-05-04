@@ -14,6 +14,8 @@ type SuperTest interface {
 	Post(url string)
 	Put(url string)
 	Delete(url string)
+	Head(url string)
+	Options(url string)
 	Send(payload interface{})
 	End(handle func(rr *httptest.ResponseRecorder))
 	Set(key, value string)
@@ -53,7 +55,6 @@ func NewSuperTest(router *gin.Engine, test *testing.T) *supertest {
 func(ctx *supertest) Get(url string)  {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodGet
-	ctx.Send(nil)
 }
 
 /**
@@ -72,7 +73,6 @@ func(ctx *supertest) Post(url string)  {
 func(ctx *supertest) Delete(url string)   {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodDelete
-	ctx.Send(nil)
 }
 
 /**
@@ -82,4 +82,22 @@ func(ctx *supertest) Delete(url string)   {
 func(ctx *supertest) Put(url string)  {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodPut
+}
+
+/**
+* @description -> http client for head request
+*/
+
+func(ctx *supertest) Head(url string)  {
+	ctx.payload.path = url
+	ctx.payload.method = http.MethodHead
+}
+
+/**
+* @description -> http client for options request
+*/
+
+func(ctx *supertest) Options(url string)  {
+	ctx.payload.path = url
+	ctx.payload.method = http.MethodOptions
 }

@@ -103,6 +103,7 @@ func TestGetMethod(t *testing.T) {
 	test := NewSuperTest(router, t)
 
 	test.Get("/")
+	test.Send(nil)
 	test.Set("Content-Type", "application/json")
 	test.End(func(rr *httptest.ResponseRecorder) {
 
@@ -138,6 +139,7 @@ func TestDeleteMethod(t *testing.T) {
 	test := NewSuperTest(router, t)
 
 	test.Delete("/" + fmt.Sprintf("%v", 5))
+	test.Send(nil)
 	test.Set("Content-Type", "application/json")
 	test.End(func(rr *httptest.ResponseRecorder) {
 
