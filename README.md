@@ -301,15 +301,15 @@ $ go get -u https://github.com/restuwahyu13/go-supertest
 
 ### Bugs
 
-For information on bugs related to package libraries, please visit [here](https://github.com/restuwahyu13/go-playground-converter/issues)
+For information on bugs related to package libraries, please visit [here](https://github.com/restuwahyu13/go-supertest/issues)
 
 ### Contributing
 
-Want to make **Midtrans Node** more perfect ? Let's contribute and follow the [contribution guide.](https://github.com/restuwahyu13/go-playground-converter/blob/main/CONTRIBUTING.md)
+Want to make **Go Supertest** more perfect ? Let's contribute and follow the [contribution guide.](https://github.com/restuwahyu13/go-supertest/blob/main/CONTRIBUTING.md)
 
 ### License
 
-- [MIT License](https://github.com/restuwahyu13/go-playground-converter/blob/main/LICENSE.md)
+- [MIT License](https://github.com/restuwahyu13/go-supertest/blob/main/LICENSE.md)
 
 <p align="right" style="padding: 5px; border-radius: 100%; background-color: red; font-size: 2rem;">
   <b><a href="#go-supertest">BACK TO TOP</a></b>
