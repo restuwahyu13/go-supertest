@@ -17,14 +17,14 @@ func(ctx *supertest) Send(payload interface{}) {
 				ctx.request.httpRequest = req
 
 				if err != nil  {
-					ctx.test.Error(err.Error())
+					ctx.test.Fail()
 					return
 				}
 		} else {
 				response, err := json.Marshal(payload)
 
 				if err != nil  {
-					ctx.test.Error(err.Error())
+					ctx.test.Fail()
 					return
 				}
 

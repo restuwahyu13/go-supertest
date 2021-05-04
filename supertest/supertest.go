@@ -9,14 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// type core interface {
-// 	Send(payload interface{})
-// 	End(handle func(rr *httptest.ResponseRecorder))
-// 	Set(key, value string)
-// 	Auth(key, value string)
-// 	Timeout(timeType string, value time.Duration)
-// }
-
 type SuperTest interface {
 	Get(url string)
 	Post(url string)
