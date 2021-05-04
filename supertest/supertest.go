@@ -24,7 +24,7 @@ type SuperTest interface {
 }
 
 type payload struct {
-	path string
+	path   string
 	method string
 }
 
@@ -38,7 +38,7 @@ type request struct {
 
 type supertest struct {
 	router *gin.Engine
-	test *testing.T
+	test   *testing.T
 	payload
 	response
 	request
@@ -50,54 +50,54 @@ func NewSuperTest(router *gin.Engine, test *testing.T) *supertest {
 
 /**
 * @description -> http client for get request
-*/
+ */
 
-func(ctx *supertest) Get(url string)  {
+func (ctx *supertest) Get(url string) {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodGet
 }
 
 /**
 * @description -> http client for post request
-*/
+ */
 
-func(ctx *supertest) Post(url string)  {
+func (ctx *supertest) Post(url string) {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodPost
 }
 
 /**
 * @description -> http client for delete request
-*/
+ */
 
-func(ctx *supertest) Delete(url string)   {
+func (ctx *supertest) Delete(url string) {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodDelete
 }
 
 /**
 * @description -> http client for put request
-*/
+ */
 
-func(ctx *supertest) Put(url string)  {
+func (ctx *supertest) Put(url string) {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodPut
 }
 
 /**
 * @description -> http client for head request
-*/
+ */
 
-func(ctx *supertest) Head(url string)  {
+func (ctx *supertest) Head(url string) {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodHead
 }
 
 /**
 * @description -> http client for options request
-*/
+ */
 
-func(ctx *supertest) Options(url string)  {
+func (ctx *supertest) Options(url string) {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodOptions
 }

@@ -19,9 +19,9 @@ type User struct {
 func GetMethod(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"statusCode": 200,
-		"method": http.MethodGet,
-		"message": "fetch request using get method",
-		"data": nil,
+		"method":     http.MethodGet,
+		"message":    "fetch request using get method",
+		"data":       nil,
 	})
 }
 
@@ -31,9 +31,9 @@ func PostMethod(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"statusCode": 200,
-		"method": http.MethodPost,
-		"message": "fetch request using post method",
-		"data": input,
+		"method":     http.MethodPost,
+		"message":    "fetch request using post method",
+		"data":       input,
 	})
 }
 
@@ -48,13 +48,13 @@ func DeleteMethod(ctx *gin.Context) {
 	userData["name-4"] = "curt cobain"
 	userData["name-5"] = "rorona zoro"
 
-	delete(userData, "name-" + userId)
+	delete(userData, "name-"+userId)
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"statusCode": 200,
-		"method": http.MethodPost,
-		"message": "fetch request using delete method",
-		"data": userData,
+		"method":     http.MethodPost,
+		"message":    "fetch request using delete method",
+		"data":       userData,
 	})
 }
 
@@ -73,13 +73,13 @@ func PutMethod(ctx *gin.Context) {
 	userData["name-4"] = "curt cobain"
 	userData["name-5"] = "rorona zoro"
 
-	userData["name-" + userId] = input.Name
+	userData["name-"+userId] = input.Name
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"statusCode": 200,
-		"method": http.MethodPost,
-		"message": "fetch request using put method",
-		"data": userData,
+		"method":     http.MethodPost,
+		"message":    "fetch request using put method",
+		"data":       userData,
 	})
 }
 
@@ -110,8 +110,8 @@ func TestGetMethod(t *testing.T) {
 		response := util.Parse(rr.Body.Bytes())
 
 		assert.Equal(t, rr.Code, http.StatusOK)
-    assert.Equal(t, http.MethodGet, response.Method)
-    assert.Equal(t, "fetch request using get method", response.Message)
+		assert.Equal(t, http.MethodGet, response.Method)
+		assert.Equal(t, "fetch request using get method", response.Message)
 	})
 }
 
@@ -119,7 +119,7 @@ func TestPostMethod(t *testing.T) {
 	test := NewSuperTest(router, t)
 
 	payload := gin.H{
-		"name" : "restu wahyu saputra",
+		"name": "restu wahyu saputra",
 	}
 
 	test.Post("/")
@@ -130,8 +130,8 @@ func TestPostMethod(t *testing.T) {
 		response := util.Parse(rr.Body.Bytes())
 
 		assert.Equal(t, rr.Code, http.StatusOK)
-    assert.Equal(t, http.MethodPost, response.Method)
-    assert.Equal(t, "fetch request using post method", response.Message)
+		assert.Equal(t, http.MethodPost, response.Method)
+		assert.Equal(t, "fetch request using post method", response.Message)
 	})
 }
 
@@ -146,10 +146,10 @@ func TestDeleteMethod(t *testing.T) {
 		response := util.Parse(rr.Body.Bytes())
 
 		assert.Equal(t, rr.Code, http.StatusOK)
-    assert.Equal(t, http.MethodPost, response.Method)
-    assert.Equal(t, "fetch request using delete method", response.Message)
+		assert.Equal(t, http.MethodPost, response.Method)
+		assert.Equal(t, "fetch request using delete method", response.Message)
 
-		encoded , _:= json.Marshal(response.Data)
+		encoded, _ := json.Marshal(response.Data)
 
 		var mapping map[string]interface{}
 		json.Unmarshal(encoded, &mapping)
@@ -162,7 +162,7 @@ func TestPutMethod(t *testing.T) {
 	test := NewSuperTest(router, t)
 
 	payload := gin.H{
-		"name" : "restu wahyu saputra",
+		"name": "restu wahyu saputra",
 	}
 
 	test.Put("/" + fmt.Sprintf("%v", 1))
@@ -173,10 +173,10 @@ func TestPutMethod(t *testing.T) {
 		response := util.Parse(rr.Body.Bytes())
 
 		assert.Equal(t, rr.Code, http.StatusOK)
-    assert.Equal(t, http.MethodPost, response.Method)
-    assert.Equal(t, "fetch request using put method", response.Message)
+		assert.Equal(t, http.MethodPost, response.Method)
+		assert.Equal(t, "fetch request using put method", response.Message)
 
-		encoded , _:= json.Marshal(response.Data)
+		encoded, _ := json.Marshal(response.Data)
 
 		var mapping map[string]interface{}
 		json.Unmarshal(encoded, &mapping)

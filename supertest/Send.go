@@ -7,30 +7,30 @@ import (
 	"net/http/httptest"
 )
 
-func(ctx *supertest) Send(payload interface{}) {
+func (ctx *supertest) Send(payload interface{}) {
 
-			response, err := json.Marshal(payload)
+	response, err := json.Marshal(payload)
 
-			if err != nil  {
-				ctx.test.Fail()
-				return
-			}
+	if err != nil {
+		ctx.test.Fail()
+		return
+	}
 
-			req, err := http.NewRequest(ctx.payload.method, ctx.payload.path, bytes.NewBuffer(response))
-			req.Header.Add("Access-Control-Allow-Origin", "*")
-			req.Header.Add("Access-Control-Allow-Headers", "*")
-			req.Header.Add("Access-Control-Expose-Headers", "*")
-			req.Header.Add("User-Agent", "go-supertest/0.0.1")
+	req, err := http.NewRequest(ctx.payload.method, ctx.payload.path, bytes.NewBuffer(response))
+	req.Header.Add("Access-Control-Allow-Origin", "*")
+	req.Header.Add("Access-Control-Allow-Headers", "*")
+	req.Header.Add("Access-Control-Expose-Headers", "*")
+	req.Header.Add("User-Agent", "go-supertest/0.0.1")
 
-			ctx.request.httpRequest = req
+	ctx.request.httpRequest = req
 
-			if err != nil {
-				ctx.test.Error(err.Error())
-				return
-			}
+	if err != nil {
+		ctx.test.Error(err.Error())
+		return
+	}
 
-		rr := httptest.NewRecorder()
-		ctx.response.httpResponse = rr
+	rr := httptest.NewRecorder()
+	ctx.response.httpResponse = rr
 
-		ctx.router.ServeHTTP(rr, req)
+	ctx.router.ServeHTTP(rr, req)
 }
