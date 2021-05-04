@@ -1,11 +1,6 @@
 ## Go SuperTest
 
-[![Build Status](https://travis-ci.org/restuwahyu13/go-supertest.svg?branch=main)](https://travis-ci.org/restuwahyu13/go-supertest)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/restuwahyu13/go-supertest?style=flat-square)
-[![Go Report Card](https://goreportcard.com/badge/github.com/restuwahyu13/go-supertest)](https://goreportcard.com/report/github.com/restuwahyu13/go-supertest)
-![GitHub issues](https://img.shields.io/github/issues/restuwahyu13/go-supertest?style=flat-square)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/restuwahyu13/go-supertest?style=flat-square)
-![GitHub contributors](https://img.shields.io/github/contributors/restuwahyu13/go-supertest?style=flat-square)
+[![Build Status](https://travis-ci.org/restuwahyu13/go-supertest.svg?branch=main)](https://travis-ci.org/restuwahyu13/go-supertest) ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/restuwahyu13/go-supertest?style=flat-square) [![Go Report Card](https://goreportcard.com/badge/github.com/restuwahyu13/go-supertest)](https://goreportcard.com/report/github.com/restuwahyu13/go-supertest) ![GitHub issues](https://img.shields.io/github/issues/restuwahyu13/go-supertest?style=flat-square) ![GitHub closed issues](https://img.shields.io/github/issues-closed/restuwahyu13/go-supertest?style=flat-square) ![GitHub contributors](https://img.shields.io/github/contributors/restuwahyu13/go-supertest?style=flat-square)
 
 Go Supertest is minimalize HTTP Client Testing only for Gin Framework, inspired by
 [Supertest](https://www.npmjs.com/package/supertest) package library HTTP Client Testing for Express.js Framework.
