@@ -10,15 +10,29 @@
 Go Supertest is minimalize HTTP Client Testing only for Gin Framework, inspired by
 [Supertest](https://www.npmjs.com/package/supertest) package library HTTP Client Testing for Express.js Framework.
 
-- [Go SuperTest](#go-supertest)
-- [Installation](#installation)
-  - [API Reference](#api-reference)
-  - [Example Usage](#example-usage)
-  - [API Status Reference](#api-status-reference)
-  - [Testing](#testing)
-  - [Bugs](#bugs)
-  - [Contributing](#contributing)
-  - [License](#license)
+- [GPC API Documentation](#Agtran-API-Documentation-(Next-Version))
+  * [Installation](#installation)
+  * [API Reference](#api-reference)
+    + [NewSuperTest](#newsupertest)
+    + [Get](#get)
+    + [Post](#post)
+    + [Delete](#delete)
+    + [Put](#put)
+    + [Patch](#patch)
+    + [Head](#head)
+    + [Options](#options)
+    + [Send](#BindValidator)
+    + [Set](#BindValidator)
+    + [Auth](#BindValidator)
+    + [Timeout](#BindValidator)
+  * [Example Usage](#example-usage)
+    + [Main Setup](#main-setup)
+    + [Test Setup](#test-setup)
+  * [API Status Reference](#api-status-reference)
+  * [Testing](#testing)
+  * [Bugs](#bugs)
+  * [Contributing](#contributing)
+  * [License](#license)
 
 ## Installation
 
