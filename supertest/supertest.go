@@ -1,7 +1,6 @@
 package super
 
 import (
-	"bytes"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -10,11 +9,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// type core interface {
+// 	Send(payload interface{})
+// 	End(handle func(rr *httptest.ResponseRecorder))
+// 	Set(key, value string)
+// 	Auth(key, value string)
+// 	Timeout(timeType string, value time.Duration)
+// }
+
 type SuperTest interface {
-	Get(url string) (*httptest.ResponseRecorder, *http.Request, error)
-	Post(url string) (*httptest.ResponseRecorder, *http.Request, error)
-	Put(url string) (*httptest.ResponseRecorder, *http.Request, error)
-	Delete(url string) (*httptest.ResponseRecorder, *http.Request, error)
+	Get(url string)
+	Post(url string)
+	Put(url string)
+	Delete(url string)
+	Send(payload interface{})
+	End(handle func(rr *httptest.ResponseRecorder))
+	Set(key, value string)
+	Auth(key, value string)
+	Timeout(timeType string, value time.Duration)
 }
 
 type payload struct {
@@ -30,20 +42,12 @@ type request struct {
 	httpRequest *http.Request
 }
 
-type core interface {
-	Send(payload interface{})
-	End(handle func(rr *httptest.ResponseRecorder))
-	Set(key, value string)
-	Auth(key, value string)
-}
-
 type supertest struct {
 	router *gin.Engine
 	test *testing.T
 	payload
 	response
 	request
-	core
 }
 
 func NewSuperTest(router *gin.Engine, test *testing.T) *supertest {
@@ -54,66 +58,36 @@ func NewSuperTest(router *gin.Engine, test *testing.T) *supertest {
 * @description -> http client for get request
 */
 
-func(ctx *supertest) Get(url string) (*httptest.ResponseRecorder)  {
-
-	time.Sleep(time.Second * 1)
-
-	req, err := http.NewRequest(http.MethodGet, url, bytes.NewBuffer([]byte(nil)))
-	ctx.request.httpRequest = req
-
-	if err != nil {
-		ctx.test.Error(err.Error())
-		return nil
-	}
-
-	rr := httptest.NewRecorder()
-	ctx.response.httpResponse = rr
-
-	ctx.router.ServeHTTP(rr, req)
-
-	return rr
+func(ctx *supertest) Get(url string)  {
+	ctx.payload.path = url
+	ctx.payload.method = http.MethodGet
+	ctx.Send(nil)
 }
 
 /**
 * @description -> http client for post request
 */
 
-func(ctx *supertest) Post(url string) core {
+func(ctx *supertest) Post(url string)  {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodPost
-	return ctx
 }
 
 /**
 * @description -> http client for delete request
 */
 
-func(ctx *supertest) Delete(url string) (*httptest.ResponseRecorder)  {
-
-	time.Sleep(time.Second * 1)
-
-	req, err := http.NewRequest(http.MethodGet, url, bytes.NewBuffer([]byte(nil)))
-	ctx.request.httpRequest = req
-
-	if err != nil {
-		ctx.test.Error(err.Error())
-		return nil
-	}
-
-	rr := httptest.NewRecorder()
-	ctx.response.httpResponse = rr
-
-	ctx.router.ServeHTTP(rr, req)
-
-	return rr
+func(ctx *supertest) Delete(url string)   {
+	ctx.payload.path = url
+	ctx.payload.method = http.MethodDelete
+	ctx.Send(nil)
 }
 
 /**
 * @description -> http client for put request
 */
 
-func(ctx *supertest) Put(url string) core {
+func(ctx *supertest) Put(url string)  {
 	ctx.payload.path = url
 	ctx.payload.method = http.MethodPut
-	return ctx
 }

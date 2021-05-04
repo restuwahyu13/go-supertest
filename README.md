@@ -59,35 +59,20 @@ func SetupRouter() *gin.Engine {
 ### Example Usage Test
 
 ```go
-package main
-
-import (
-	"net/http"
-	"net/http/httptest"
-	"testing"
-
-	"github.com/gin-gonic/gin"
-	"github.com/go-playground/assert/v2"
-	super "github.com/restuwahyu13/go-supertest/supertest"
-	util "github.com/restuwahyu13/go-supertest/utils"
-	"github.com/sirupsen/logrus"
-)
-
-var router = SetupRouter()
-
 func TestGetMethod(t *testing.T) {
 	supertest := super.NewSuperTest(router, t)
 
 	supertest.Get("/")
+	supertest.Timeout("second", 1)
 	supertest.Set("Content-Type", "application/json")
 	supertest.End(func(rr *httptest.ResponseRecorder) {
-	
+
 		response := util.Parse(rr.Body.Bytes())
 		logrus.Info(response.Data)
 
 		assert.Equal(t, rr.Code, response.StatusCode)
-		assert.Equal(t, http.MethodGet, response.Method)
-		assert.Equal(t, "fetch request using get method", response.Message)
+    assert.Equal(t, http.MethodGet, response.Method)
+    assert.Equal(t, "fetch request using get method", response.Message)
 	})
 }
 
@@ -99,18 +84,18 @@ func TestPostMethod(t *testing.T) {
 		"password" : "bukopin12",
 	}
 
-	request := supertest.Post("/")
-	request.Send(payload)
-	request.Set("Content-Type", "application/json")
+	supertest.Post("/")
+	supertest.Timeout("second", 1)
+	supertest.Send(payload)
+	supertest.Set("Content-Type", "application/json")
+	supertest.End(func(rr *httptest.ResponseRecorder) {
 
-	request.End(func(rr *httptest.ResponseRecorder) {
-	
 		response := util.Parse(rr.Body.Bytes())
 		logrus.Info(response.Data)
 
 		assert.Equal(t, rr.Code, http.StatusOK)
-    		assert.Equal(t, http.MethodPost, response.Method)
-    		assert.Equal(t, "fetch request using post method", response.Message)
+    assert.Equal(t, http.MethodPost, response.Method)
+    assert.Equal(t, "fetch request using post method", response.Message)
 	})
 }
 ```
