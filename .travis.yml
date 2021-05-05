@@ -2,10 +2,12 @@ addons:
   apt:
     packages:
       - make
-before_script:
+before_install:
   - go mod download
   - "echo -e \"machine github.com\\n  login $GITHUB_TOKEN\" > ~/.netrc"
   - git lfs pull
+before_script:
+  - go version
 branches:
   only:
     - main
@@ -19,8 +21,8 @@ jobs:
 language: go
 os:
   - linux
-script: go test -v ./supertest/...
+script: make gotest
 env:
   global:
     - GO111MODULE=on
-    - GIN_MODE=test
+    - GIN_MODE=release
