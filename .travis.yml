@@ -4,8 +4,9 @@ addons:
       - make
 before_install:
   - "echo -e \"machine github.com\\n  login $GITHUB_TOKEN\" > ~/.netrc"
-  - 'git lfs pull'
-  - 'make goinstall'
+  - git lfs pull
+before_script:
+  - make goinstall
 branches:
   only:
     - main
@@ -19,4 +20,6 @@ jobs:
 language: go
 os:
   - linux
-script: 'make gotest'
+script: make gotest
+env:
+  - GO111MODULE=on
