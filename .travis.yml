@@ -21,7 +21,7 @@ jobs:
 language: go
 os:
   - linux
-script: go test -v ./supertest/...
+script: go test -v
 env:
   global:
     - GO111MODULE=on
