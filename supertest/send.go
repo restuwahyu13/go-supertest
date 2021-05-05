@@ -12,7 +12,7 @@ func (ctx *supertest) Send(payload interface{}) {
 	response, err := json.Marshal(payload)
 
 	if err != nil {
-		ctx.test.Fail()
+		ctx.test.Error(err.Error())
 		return
 	}
 

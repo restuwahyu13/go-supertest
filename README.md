@@ -172,6 +172,31 @@ added before `Set`, please check example usage about this package is working.
     })
   }
 
+  func PutMethod(ctx *gin.Context) {
+
+    var input User
+
+    userId := ctx.Param("id")
+    ctx.ShouldBindJSON(&input)
+
+    userData := make(map[string]string, 5)
+
+    userData["name-1"] = "john doe"
+    userData["name-2"] = "jane doe"
+    userData["name-3"] = "james bond"
+    userData["name-4"] = "curt cobain"
+    userData["name-5"] = "rorona zoro"
+
+    userData["name-"+userId] = input.Name
+
+    ctx.JSON(http.StatusOK, gin.H{
+      "statusCode": 200,
+      "method":     http.MethodPost,
+      "message":    "fetch request using put method",
+      "data":       userData,
+    })
+  }
+
   func main() {
     router := SetupRouter
     router.Run()
@@ -196,6 +221,13 @@ added before `Set`, please check example usage about this package is working.
   ```go
   package main
 
+  type Response struct {
+    StatusCode int `json:"statusCode"`
+    Method     string `json:"method"`
+    Message    string  `json:"message"`
+    Data     interface{} `json:"data"`
+  }
+
   var router = SetupRouter()
 
   func TestGetMethod(t *testing.T) {
@@ -206,7 +238,8 @@ added before `Set`, please check example usage about this package is working.
     test.Set("Content-Type", "application/json")
     test.End(func(rr *httptest.ResponseRecorder) {
 
-      response := util.Parse(rr.Body.Bytes())
+      var response Response
+      json.Unmarshal(rr.Body.Bytes(), &response)
 
       assert.Equal(t, rr.Code, http.StatusOK)
       assert.Equal(t, http.MethodGet, response.Method)
@@ -226,7 +259,8 @@ added before `Set`, please check example usage about this package is working.
     test.Set("Content-Type", "application/json")
     test.End(func(rr *httptest.ResponseRecorder) {
 
-      response := util.Parse(rr.Body.Bytes())
+      var response Response
+      json.Unmarshal(rr.Body.Bytes(), &response)
 
       assert.Equal(t, rr.Code, http.StatusOK)
       assert.Equal(t, http.MethodPost, response.Method)
@@ -242,7 +276,8 @@ added before `Set`, please check example usage about this package is working.
     test.Set("Content-Type", "application/json")
     test.End(func(rr *httptest.ResponseRecorder) {
 
-      response := util.Parse(rr.Body.Bytes())
+      var response Response
+      json.Unmarshal(rr.Body.Bytes(), &response)
 
       assert.Equal(t, rr.Code, http.StatusOK)
       assert.Equal(t, http.MethodPost, response.Method)
@@ -269,7 +304,8 @@ added before `Set`, please check example usage about this package is working.
     test.Set("Content-Type", "application/json")
     test.End(func(rr *httptest.ResponseRecorder) {
 
-      response := util.Parse(rr.Body.Bytes())
+      var response Response
+      json.Unmarshal(rr.Body.Bytes(), &response)
 
       assert.Equal(t, rr.Code, http.StatusOK)
       assert.Equal(t, http.MethodPost, response.Method)
