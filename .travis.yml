@@ -2,11 +2,10 @@ addons:
   apt:
     packages:
       - make
-before_install:
+before_script:
+  - go mod download
   - "echo -e \"machine github.com\\n  login $GITHUB_TOKEN\" > ~/.netrc"
   - git lfs pull
-before_script:
-  - make goinstall
 branches:
   only:
     - main
@@ -20,6 +19,7 @@ jobs:
 language: go
 os:
   - linux
-script: make gotest
+script: go test -v ./supertest/...
 env:
-  - GO111MODULE=on
+  global:
+    - GO111MODULE=on
