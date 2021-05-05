@@ -21,7 +21,7 @@ jobs:
 language: go
 os:
   - linux
-script: make gotest
+script: richgo test -v ./supertest/...
 env:
   global:
     - GO111MODULE=on
