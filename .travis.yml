@@ -3,7 +3,7 @@ addons:
     packages:
       - make
 before_install:
-  - go mod download
+  - cd supertest && go mod download
   - "echo -e \"machine github.com\\n  login $GITHUB_TOKEN\" > ~/.netrc"
   - git lfs pull
 before_script:
@@ -21,7 +21,7 @@ jobs:
 language: go
 os:
   - linux
-script: richgo test -v ./supertest/...
+script: go test -v ./supertest/...
 env:
   global:
     - GO111MODULE=on
