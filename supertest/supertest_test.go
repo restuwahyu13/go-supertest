@@ -9,11 +9,17 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/assert/v2"
-	util "github.com/restuwahyu13/go-supertest/utils"
 )
 
 type User struct {
 	Name string `json:"name"`
+}
+
+type Response struct {
+	StatusCode int `json:"statusCode"`
+	Method     string `json:"method"`
+	Message    string  `json:"message"`
+	Data     interface{} `json:"data"`
 }
 
 func GetMethod(ctx *gin.Context) {
@@ -107,7 +113,8 @@ func TestGetMethod(t *testing.T) {
 	test.Set("Content-Type", "application/json")
 	test.End(func(rr *httptest.ResponseRecorder) {
 
-		response := util.Parse(rr.Body.Bytes())
+		var response Response
+		json.Unmarshal(rr.Body.Bytes(), &response)
 
 		assert.Equal(t, rr.Code, http.StatusOK)
 		assert.Equal(t, http.MethodGet, response.Method)
@@ -127,7 +134,8 @@ func TestPostMethod(t *testing.T) {
 	test.Set("Content-Type", "application/json")
 	test.End(func(rr *httptest.ResponseRecorder) {
 
-		response := util.Parse(rr.Body.Bytes())
+		var response Response
+		json.Unmarshal(rr.Body.Bytes(), &response)
 
 		assert.Equal(t, rr.Code, http.StatusOK)
 		assert.Equal(t, http.MethodPost, response.Method)
@@ -143,7 +151,8 @@ func TestDeleteMethod(t *testing.T) {
 	test.Set("Content-Type", "application/json")
 	test.End(func(rr *httptest.ResponseRecorder) {
 
-		response := util.Parse(rr.Body.Bytes())
+		var response Response
+		json.Unmarshal(rr.Body.Bytes(), &response)
 
 		assert.Equal(t, rr.Code, http.StatusOK)
 		assert.Equal(t, http.MethodPost, response.Method)
@@ -170,7 +179,9 @@ func TestPutMethod(t *testing.T) {
 	test.Set("Content-Type", "application/json")
 	test.End(func(rr *httptest.ResponseRecorder) {
 
-		response := util.Parse(rr.Body.Bytes())
+
+		var response Response
+		json.Unmarshal(rr.Body.Bytes(), &response)
 
 		assert.Equal(t, rr.Code, http.StatusOK)
 		assert.Equal(t, http.MethodPost, response.Method)
