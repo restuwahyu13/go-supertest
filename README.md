@@ -21,7 +21,7 @@ Go Supertest is minimalize HTTP Client Testing only for Gin Framework, inspired 
     + [Set](#set-key-value-string-)
     + [Auth](#auth-key-value-string-)
     + [Timeout](#timeout-timetype-string-value-timeduration-)
-    + [Expect](#expect-key-value-interface-)
+    + [Expect](#expect-options-options-)
   * [Example Usage](#example-usage)
     + [Main Setup](#main-setup)
     + [Test Setup](#test-setup)
