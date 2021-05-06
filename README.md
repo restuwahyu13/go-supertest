@@ -21,6 +21,7 @@ Go Supertest is minimalize HTTP Client Testing only for Gin Framework, inspired 
     + [Set](#set-key-value-string-)
     + [Auth](#auth-key-value-string-)
     + [Timeout](#timeout-timetype-string-value-timeduration-)
+    + [Expect](#expect-key-value-interface-)
   * [Example Usage](#example-usage)
     + [Main Setup](#main-setup)
     + [Test Setup](#test-setup)
@@ -39,7 +40,7 @@ $ go get -u github.com/restuwahyu13/go-supertest
 ### API Reference
 
 **Important** if you use http request using `Get` or `Delete` method you must be use `Send` with nil value and `Send` must be
-added before `Set`, please check example usage about this package is working.
+added before `Set`, `Expect` or `Auth` please check example usage about this package is working.
 
 - #### NewSuperTest( router *gin.Engine, test *testing.T )
 
@@ -118,6 +119,12 @@ added before `Set`, please check example usage about this package is working.
   | Method  | Description                                  |
   | ------- | -------------------------------------------- |
   | Timeout | set delay before sending request into client |
+
+- #### Expect( options Options )
+
+  | Method | Description                            |
+  | ------ | -------------------------------------- |
+  | Expect | assert response status code and header | 
 
 ### Example Usage
 
@@ -359,7 +366,7 @@ added before `Set`, please check example usage about this package is working.
 | Set     | _yes_ | set your headers before sending http request into client                         |
 | Auth    | _yes_ | pass the username or password if you are using HTTP Basic authentication         |
 | Timeout | _yes_ | set delay before sending request into client                                     |
-| Expect  | _yes_ | expect the given data to match                                                   |
+| Expect  | _yes_ | assert response status code and header                                           | 
 | Attach  | _no_  | handle requests from files or image uploads if you are using multipart/form-data |
 | Field   | _no_  | handle data submitted from form/field if you are using multipart/form-data       |
 
