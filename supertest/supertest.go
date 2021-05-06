@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,19 +12,9 @@ import (
 * @description -> core funcionality
  */
 
-type SuperTest interface {
-	Get(url string)
-	Post(url string)
-	Delete(url string)
-	Put(url string)
-	Patch(url string)
-	Head(url string)
-	Options(url string)
-	Send(payload interface{})
-	End(handle func(rr *httptest.ResponseRecorder))
-	Set(key, value string)
-	Auth(key, value string)
-	Timeout(timeType string, value time.Duration)
+type Options struct {
+	Key string `default:"empty"`
+	Value interface{}
 }
 
 type payload struct {

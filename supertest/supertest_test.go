@@ -111,12 +111,13 @@ func TestGetMethod(t *testing.T) {
 	test.Get("/")
 	test.Send(nil)
 	test.Set("Content-Type", "application/json")
+	test.Expect(Options{ Key: "Content-Type",	Value: "application/json"	})
+	test.Expect(Options{	Value: 200 })
 	test.End(func(rr *httptest.ResponseRecorder) {
 
 		var response Response
 		json.Unmarshal(rr.Body.Bytes(), &response)
 
-		assert.Equal(t, rr.Code, http.StatusOK)
 		assert.Equal(t, http.MethodGet, response.Method)
 		assert.Equal(t, "fetch request using get method", response.Message)
 	})
@@ -132,6 +133,8 @@ func TestPostMethod(t *testing.T) {
 	test.Post("/")
 	test.Send(payload)
 	test.Set("Content-Type", "application/json")
+	test.Expect(Options{ Key: "Content-Type",	Value: "application/json"	})
+	test.Expect(Options{	Value: 200 })
 	test.End(func(rr *httptest.ResponseRecorder) {
 
 		var response Response
@@ -149,12 +152,13 @@ func TestDeleteMethod(t *testing.T) {
 	test.Delete("/" + fmt.Sprintf("%v", 5))
 	test.Send(nil)
 	test.Set("Content-Type", "application/json")
+	test.Expect(Options{ Key: "Content-Type",	Value: "application/json"	})
+	test.Expect(Options{	Value: 200 })
 	test.End(func(rr *httptest.ResponseRecorder) {
 
 		var response Response
 		json.Unmarshal(rr.Body.Bytes(), &response)
 
-		assert.Equal(t, rr.Code, http.StatusOK)
 		assert.Equal(t, http.MethodPost, response.Method)
 		assert.Equal(t, "fetch request using delete method", response.Message)
 
@@ -177,13 +181,14 @@ func TestPutMethod(t *testing.T) {
 	test.Put("/" + fmt.Sprintf("%v", 1))
 	test.Send(payload)
 	test.Set("Content-Type", "application/json")
+	test.Expect(Options{ Key: "Content-Type",	Value: "application/json"	})
+	test.Expect(Options{	Value: 200 })
 	test.End(func(rr *httptest.ResponseRecorder) {
 
 
 		var response Response
 		json.Unmarshal(rr.Body.Bytes(), &response)
 
-		assert.Equal(t, rr.Code, http.StatusOK)
 		assert.Equal(t, http.MethodPost, response.Method)
 		assert.Equal(t, "fetch request using put method", response.Message)
 

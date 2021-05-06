@@ -126,6 +126,12 @@ added before `Set`, please check example usage about this package is working.
   ```go
   package main
 
+  import (
+    "net/http"
+
+    "github.com/gin-gonic/gin"
+  )
+
   type User struct {
     Name string `json:"name"`
   }
@@ -198,13 +204,12 @@ added before `Set`, please check example usage about this package is working.
   }
 
   func main() {
-    router := SetupRouter
+    router := SetupRouter()
     router.Run()
   }
 
   func SetupRouter() *gin.Engine {
     router := gin.Default()
-
     gin.SetMode(gin.TestMode)
 
     router.GET("/", GetMethod)
@@ -221,6 +226,18 @@ added before `Set`, please check example usage about this package is working.
   ```go
   package main
 
+  import (
+    "encoding/json"
+    "fmt"
+    "net/http"
+    "net/http/httptest"
+    "testing"
+
+    "github.com/gin-gonic/gin"
+    "github.com/go-playground/assert/v2"
+    "github.com/restuwahyu13/go-supertest/supertest"
+  )
+
   type Response struct {
     StatusCode int `json:"statusCode"`
     Method     string `json:"method"`
@@ -236,12 +253,13 @@ added before `Set`, please check example usage about this package is working.
     test.Get("/")
     test.Send(nil)
     test.Set("Content-Type", "application/json")
+    test.Expect(supertest.Options{ Key: "Content-Type",	Value: "application/json"	})
+    test.Expect(supertest.Options{ Value: 200 })
     test.End(func(rr *httptest.ResponseRecorder) {
 
       var response Response
       json.Unmarshal(rr.Body.Bytes(), &response)
 
-      assert.Equal(t, rr.Code, http.StatusOK)
       assert.Equal(t, http.MethodGet, response.Method)
       assert.Equal(t, "fetch request using get method", response.Message)
     })
@@ -257,12 +275,13 @@ added before `Set`, please check example usage about this package is working.
     test.Post("/")
     test.Send(payload)
     test.Set("Content-Type", "application/json")
+    test.Expect(supertest.Options{ Key: "Content-Type",	Value: "application/json"	})
+    test.Expect(supertest.Options{ Value: 200 })
     test.End(func(rr *httptest.ResponseRecorder) {
 
       var response Response
       json.Unmarshal(rr.Body.Bytes(), &response)
 
-      assert.Equal(t, rr.Code, http.StatusOK)
       assert.Equal(t, http.MethodPost, response.Method)
       assert.Equal(t, "fetch request using post method", response.Message)
     })
@@ -274,12 +293,13 @@ added before `Set`, please check example usage about this package is working.
     test.Delete("/" + fmt.Sprintf("%v", 5))
     test.Send(nil)
     test.Set("Content-Type", "application/json")
+    test.Expect(supertest.Options{ Key: "Content-Type",	Value: "application/json"	})
+    test.Expect(supertest.Options{ Value: 200 })
     test.End(func(rr *httptest.ResponseRecorder) {
 
       var response Response
       json.Unmarshal(rr.Body.Bytes(), &response)
 
-      assert.Equal(t, rr.Code, http.StatusOK)
       assert.Equal(t, http.MethodPost, response.Method)
       assert.Equal(t, "fetch request using delete method", response.Message)
 
@@ -302,13 +322,15 @@ added before `Set`, please check example usage about this package is working.
     test.Put("/" + fmt.Sprintf("%v", 1))
     test.Send(payload)
     test.Set("Content-Type", "application/json")
+    test.Expect(supertest.Options{ Key: "Content-Type",	Value: "application/json"	})
+    test.Expect(supertest.Options{ Value: 200 })
     test.End(func(rr *httptest.ResponseRecorder) {
+
 
       var response Response
       json.Unmarshal(rr.Body.Bytes(), &response)
 
       assert.Equal(t, rr.Code, http.StatusOK)
-      assert.Equal(t, http.MethodPost, response.Method)
       assert.Equal(t, "fetch request using put method", response.Message)
 
       encoded, _ := json.Marshal(response.Data)
