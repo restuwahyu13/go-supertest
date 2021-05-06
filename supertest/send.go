@@ -31,6 +31,4 @@ func (ctx *supertest) Send(payload interface{}) {
 
 	rr := httptest.NewRecorder()
 	ctx.response.httpResponse = rr
-
-	ctx.router.ServeHTTP(rr, req)
 }
