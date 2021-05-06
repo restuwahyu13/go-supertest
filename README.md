@@ -120,11 +120,6 @@ added before `Set`, `Expect` or `Auth` please check example usage about this pac
   | ------- | -------------------------------------------- |
   | Timeout | set delay before sending request into client |
 
-- #### Expect( options Options )
-
-  | Method | Description                            |
-  | ------ | -------------------------------------- |
-  | Expect | assert response status code and header | 
 
 ### Example Usage
 
@@ -260,14 +255,13 @@ added before `Set`, `Expect` or `Auth` please check example usage about this pac
     test.Get("/")
     test.Send(nil)
     test.Set("Content-Type", "application/json")
-    test.Expect(supertest.Options{ Key: "Content-Type",	Value: "application/json"	})
-    test.Expect(supertest.Options{ Value: 200 })
-    test.End(func(rr *httptest.ResponseRecorder) {
+    test.End(func(req *http.Request, rr *httptest.ResponseRecorder) {
 
       var response Response
       json.Unmarshal(rr.Body.Bytes(), &response)
 
-      assert.Equal(t, http.MethodGet, response.Method)
+      assert.Equal(t, http.StatusOK, rr.Code)
+      assert.Equal(t, req.Method, req.Method)
       assert.Equal(t, "fetch request using get method", response.Message)
     })
   }
@@ -282,14 +276,13 @@ added before `Set`, `Expect` or `Auth` please check example usage about this pac
     test.Post("/")
     test.Send(payload)
     test.Set("Content-Type", "application/json")
-    test.Expect(supertest.Options{ Key: "Content-Type",	Value: "application/json"	})
-    test.Expect(supertest.Options{ Value: 200 })
-    test.End(func(rr *httptest.ResponseRecorder) {
+    test.End(func(req *http.Request, rr *httptest.ResponseRecorder) {
 
       var response Response
       json.Unmarshal(rr.Body.Bytes(), &response)
 
-      assert.Equal(t, http.MethodPost, response.Method)
+      assert.Equal(t, http.StatusOK, rr.Code)
+      assert.Equal(t, req.Method, req.Method)
       assert.Equal(t, "fetch request using post method", response.Message)
     })
   }
@@ -300,14 +293,13 @@ added before `Set`, `Expect` or `Auth` please check example usage about this pac
     test.Delete("/" + fmt.Sprintf("%v", 5))
     test.Send(nil)
     test.Set("Content-Type", "application/json")
-    test.Expect(supertest.Options{ Key: "Content-Type",	Value: "application/json"	})
-    test.Expect(supertest.Options{ Value: 200 })
-    test.End(func(rr *httptest.ResponseRecorder) {
+    test.End(func(req *http.Request, rr *httptest.ResponseRecorder) {
 
       var response Response
       json.Unmarshal(rr.Body.Bytes(), &response)
 
-      assert.Equal(t, http.MethodPost, response.Method)
+      assert.Equal(t, http.StatusOK, rr.Code)
+      assert.Equal(t, req.Method, req.Method)
       assert.Equal(t, "fetch request using delete method", response.Message)
 
       encoded, _ := json.Marshal(response.Data)
@@ -329,15 +321,14 @@ added before `Set`, `Expect` or `Auth` please check example usage about this pac
     test.Put("/" + fmt.Sprintf("%v", 1))
     test.Send(payload)
     test.Set("Content-Type", "application/json")
-    test.Expect(supertest.Options{ Key: "Content-Type",	Value: "application/json"	})
-    test.Expect(supertest.Options{ Value: 200 })
-    test.End(func(rr *httptest.ResponseRecorder) {
+    test.End(func(req *http.Request, rr *httptest.ResponseRecorder) {
 
 
       var response Response
       json.Unmarshal(rr.Body.Bytes(), &response)
 
-      assert.Equal(t, rr.Code, http.StatusOK)
+      assert.Equal(t, http.StatusOK, rr.Code)
+      assert.Equal(t, req.Method, req.Method)
       assert.Equal(t, "fetch request using put method", response.Message)
 
       encoded, _ := json.Marshal(response.Data)
@@ -366,7 +357,6 @@ added before `Set`, `Expect` or `Auth` please check example usage about this pac
 | Set     | _yes_ | set your headers before sending http request into client                         |
 | Auth    | _yes_ | pass the username or password if you are using HTTP Basic authentication         |
 | Timeout | _yes_ | set delay before sending request into client                                     |
-| Expect  | _yes_ | assert response status code and header                                           | 
 | Attach  | _no_  | handle requests from files or image uploads if you are using multipart/form-data |
 | Field   | _no_  | handle data submitted from form/field if you are using multipart/form-data       |
 

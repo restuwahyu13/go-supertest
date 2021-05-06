@@ -111,9 +111,7 @@ func TestGetMethod(t *testing.T) {
 	test.Get("/")
 	test.Send(nil)
 	test.Set("Content-Type", "application/json")
-	test.Expect(Options{ Key: "Content-Type",	Value: "application/json"	})
-	test.Expect(Options{	Value: 200 })
-	test.End(func(rr *httptest.ResponseRecorder) {
+	test.End(func(req *http.Request, rr *httptest.ResponseRecorder) {
 
 		var response Response
 		json.Unmarshal(rr.Body.Bytes(), &response)
@@ -133,9 +131,7 @@ func TestPostMethod(t *testing.T) {
 	test.Post("/")
 	test.Send(payload)
 	test.Set("Content-Type", "application/json")
-	test.Expect(Options{ Key: "Content-Type",	Value: "application/json"	})
-	test.Expect(Options{	Value: 200 })
-	test.End(func(rr *httptest.ResponseRecorder) {
+	test.End(func(req *http.Request, rr *httptest.ResponseRecorder) {
 
 		var response Response
 		json.Unmarshal(rr.Body.Bytes(), &response)
@@ -152,9 +148,7 @@ func TestDeleteMethod(t *testing.T) {
 	test.Delete("/" + fmt.Sprintf("%v", 5))
 	test.Send(nil)
 	test.Set("Content-Type", "application/json")
-	test.Expect(Options{ Key: "Content-Type",	Value: "application/json"	})
-	test.Expect(Options{	Value: 200 })
-	test.End(func(rr *httptest.ResponseRecorder) {
+	test.End(func(req *http.Request, rr *httptest.ResponseRecorder) {
 
 		var response Response
 		json.Unmarshal(rr.Body.Bytes(), &response)
@@ -181,9 +175,7 @@ func TestPutMethod(t *testing.T) {
 	test.Put("/" + fmt.Sprintf("%v", 1))
 	test.Send(payload)
 	test.Set("Content-Type", "application/json")
-	test.Expect(Options{ Key: "Content-Type",	Value: "application/json"	})
-	test.Expect(Options{	Value: 200 })
-	test.End(func(rr *httptest.ResponseRecorder) {
+	test.End(func(req *http.Request, rr *httptest.ResponseRecorder) {
 
 
 		var response Response

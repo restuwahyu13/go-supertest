@@ -13,7 +13,7 @@ import (
  */
 
 type Options struct {
-	Key string `default:"empty"`
+	Key string
 	Value interface{}
 }
 
