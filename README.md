@@ -39,7 +39,7 @@ $ go get -u github.com/restuwahyu13/go-supertest
 
 ### API Reference
 
-**Important** if you use http request using with any method and you not returning payload, you must be use `Send` with nil value and `Send` must be added before `Set` or `Auth` please check example usage about this package is working.
+**Important** if you use http request using any method and you not returning payload, you must be use `Send` with nil value and `Send` must be added before `Set` or `Auth` please check example usage about this package is working.
 
 - #### NewSuperTest( router *gin.Engine, test *testing.T )
 
